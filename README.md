@@ -1,1 +1,1 @@
-cargo run -- C:\Users\Matias\Downloads\tst C:\Users\Matias\Desktop\output
+cargo run -- C:\Users\input C:\Users\output
