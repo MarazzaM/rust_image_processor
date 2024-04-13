@@ -6,21 +6,33 @@ use image::imageops::overlay;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    if args.len() < 3 {
-        println!("Usage: {} <input_dir> <output_dir>", args[0]);
-        return;
-    }
+    let (input_dir, output_dir) = match args.len() {
+        3 => (args[1].clone(), args[2].clone()), // Use command-line arguments if provided
+        _ => {
+            // Prompt the user for input and output directories
+            let default_input = "C:\\input";
+            let default_output = "C:\\output";
+            println!("Enter input directory (default: {}):", default_input);
+            let mut input = String::new();
+            std::io::stdin().read_line(&mut input).unwrap();
+            let input_dir = if input.trim().is_empty() { default_input.to_string() } else { input.trim().to_string() };
 
-    let input_dir = &args[1];
-    let output_dir = &args[2];
+            println!("Enter output directory (default: {}):", default_output);
+            let mut output = String::new();
+            std::io::stdin().read_line(&mut output).unwrap();
+            let output_dir = if output.trim().is_empty() { default_output.to_string() } else { output.trim().to_string() };
+
+            (input_dir, output_dir)
+        }
+    };
 
     // Processing each image in the input directory
-    if let Ok(entries) = std::fs::read_dir(input_dir) {
+    if let Ok(entries) = std::fs::read_dir(&input_dir) {
         entries.for_each(|entry| {
             if let Ok(entry) = entry {
                 let path = entry.path();
                 if path.is_file() {
-                    process_image(&path, output_dir);
+                    process_image(&path, &output_dir);
                 }
             }
         });
