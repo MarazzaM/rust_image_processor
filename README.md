@@ -1,0 +1,1 @@
+cargo run -- C:\Users\Matias\Downloads\tst C:\Users\Matias\Desktop\output
