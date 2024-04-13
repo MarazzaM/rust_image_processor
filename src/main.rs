@@ -1,7 +1,7 @@
 use std::env;
 use std::fs::File;
 use std::path::Path;
-use image::{GenericImageView, RgbaImage}; // Removed imageops import
+use image::{GenericImageView, RgbaImage};
 use image::imageops::overlay;
 
 fn main() {
